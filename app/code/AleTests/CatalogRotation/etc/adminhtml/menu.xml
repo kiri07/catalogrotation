@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="AleTests_CatalogRotation::main"
+             title="AleTests"
+             translate="title"
+             module="AleTests_CatalogRotation"
+             parent="Magento_Catalog::catalog"
+             sortOrder="50"
+             dependsOnModule="AleTests_CatalogRotation"
+             resource="AleTests_CatalogRotation::main"/>
+        <add id="AleTests_CatalogRotation::catalogrotation"
+             title="Catalog Rotation"
+             translate="title"
+             module="AleTests_CatalogRotation"
+             parent="AleTests_CatalogRotation::main"
+             sortOrder="10"
+             dependsOnModule="AleTests_CatalogRotation"
+             action="catalogrotation/catalogrotation"
+             resource="AleTests_CatalogRotation::catalogrotation"/>
+    </menu>
+</config>

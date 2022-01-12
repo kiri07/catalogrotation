@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="catalog_rotation_old_products_data">
+        <column xsi:type="int" name="data_id" unsigned="true"
+                nullable="false" identity="true" comment="ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="data_id"/>
+        </constraint>
+        <column xsi:type="int" name="related_category_id" unsigned="true"
+                nullable="false" comment="Product Category ID"/>
+        <column xsi:type="int" name="brand_id" unsigned="true"
+                nullable="true" comment="Brand ID"/>
+        <column xsi:type="varchar" name="old_url"
+                nullable="false" comment="Old Product Url"/>
+        <column xsi:type="varchar" name="store_id"
+                nullable="false" comment="Store Id of old Url"/>
+        <column xsi:type="varchar" name="redirection_url"
+                nullable="false" comment="Url to redirect this product to"/>
+    </table>
+    <table name="catalog_rotation_old_jobs">
+        <column xsi:type="int" name="job_id" unsigned="true"
+                nullable="false" identity="true" comment="ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="job_id"/>
+        </constraint>
+        <column xsi:type="int" name="category_to_delete" unsigned="true"
+                nullable="false" comment="Category to delete"/>
+        <column xsi:type="varchar" name="status"
+                nullable="false" comment="Job Status"/>
+    </table>
+</schema>

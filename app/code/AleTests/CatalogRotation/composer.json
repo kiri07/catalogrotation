@@ -1,0 +1,21 @@
+{
+    "name": "aletests/catalogrotation",
+    "description": "delete categories and set redirects for deleted product urls",
+    "minimum-stability": "stable",
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "magento/framework": "103.0.*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "AleTests\\CatalogRotation\\": ""
+        }
+    }
+}

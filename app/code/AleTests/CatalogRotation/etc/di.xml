@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<!--    START CONFIG FOR JOB MODLES-->
+    <preference
+        for="AleTests\CatalogRotation\Api\JobsApi\Data\JobInterface"
+        type="AleTests\CatalogRotation\Model\JobsModel\Job"
+    />
+    <preference for="AleTests\CatalogRotation\Api\JobsApi\Data\JobSearchResultInterface"
+                type="AleTests\CatalogRotation\Model\JobsModel\JobSearchResult"/>
+    <preference for="AleTests\CatalogRotation\Api\JobsApi\Data\JobRepositoryInterface"
+                type="AleTests\CatalogRotation\Model\JobsModel\JobRepository"/>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aletests_catalogrotation_job_listing_data_source" xsi:type="string">
+                    AleTests\CatalogRotation\Model\ResourceModel\Grid\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="AleTests\CatalogRotation\Model\Api\SearchCriteria\JobCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="AleTests\CatalogRotation\Model\JobsModel\JobRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">AleTests\CatalogRotation\Model\Api\SearchCriteria\JobCollectionProcessor</argument>
+        </arguments>
+    </type>
+    <virtualType
+        name="AleTests\CatalogRotation\Model\ResourceModel\Grid\Grid\Collection"
+        type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">catalog_rotation_old_jobs</argument>
+            <argument name="resourceModel" xsi:type="string">
+                AleTests\CatalogRotation\Model\JobsModel\ResourceModel\JobResourceModel
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AleTests\CatalogRotation\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+            <argument name="fileName" xsi:type="string">/var/log/catalogrotationjob.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AleTests\CatalogRotation\Logger\Logger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">CatalogRotation Logger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">AleTests\CatalogRotation\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="AleTests\CatalogRotation\Cron\JobGridDaemon">
+        <arguments>
+            <argument name="logger" xsi:type="object">AleTests\CatalogRotation\Logger\Logger</argument>
+        </arguments>
+    </type>
+<!--    END JOB MODLE CONFIG-->
+<!--    START CATALOGROTATION MODLE CONFIG-->
+    <preference
+        for="AleTests\CatalogRotation\Api\CatalogRotationApi\Data\CatalogRotationInterface"
+        type="AleTests\CatalogRotation\Model\CatalogRotationModel\CatalogRotation"
+    />
+    <preference for="AleTests\CatalogRotation\Api\CatalogRotationApi\Data\CatalogRotationSearchResultsInterface"
+                type="AleTests\CatalogRotation\Model\CatalogRotationModel\CatalogRotationSearchResults"/>
+    <preference for="AleTests\CatalogRotation\Api\CatalogRotationApi\Data\CatalogRotationRepositoryInterface"
+                type="AleTests\CatalogRotation\Model\CatalogRotationModel\CatalogRotationRepository"/>
+    <preference for="Magento\Framework\Model\ActionValidator\RemoveAction"
+                type="Magento\Framework\Model\ActionValidator\RemoveAction\Allowed" />
+    <virtualType name="AleTests\CatalogRotation\Model\Api\SearchCriteria\CatalogRotationProcessor"
+                 type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="AleTests\CatalogRotation\Model\CatalogRotationModel\JCatalogRotationRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">AleTests\CatalogRotation\Model\Api\SearchCriteria\CatalogRotationCollectionProcessor</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Cms\Controller\Noroute\Index">
+        <plugin name="RedirectToCategory"
+                type="AleTests\CatalogRotation\Plugin\RedirectToCategory"/>
+    </type>
+<!--    END CATALOGROTATION MODLE CONFIG-->
+</config>
